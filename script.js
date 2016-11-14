@@ -10,7 +10,7 @@ var warehouse = new function(capacity){
 
 //view
 var getHTMLOrderTable = function(order){
-    var s = "<table id=\"orderTable\">";
+    var s = "<table border=\"1\" id=\"storedItems\">";
     itemList = [];
     quantityList = [];
     order.forEach(function(orderEntry){
@@ -36,10 +36,19 @@ var getHTMLOrderTable = function(order){
     return s;
 };
 
+var showOrderForm = function(divID){
+
+    form  = document.getElementById(divID);
+    form.style.display = 'block';
+
+}
+
 //Controller
 
 warehouse.currentOrder.push(new OrderEntry("item1", 4));
 warehouse.currentOrder.push(new OrderEntry("item2", 2));
 warehouse.currentOrder.push(new OrderEntry("item3", 6));
 
+document.getElementById("storedItems").innerHTML = getHTMLOrderTable(warehouse.currentOrder);
 console.log(getHTMLOrderTable(warehouse.currentOrder));
+

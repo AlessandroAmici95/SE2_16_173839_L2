@@ -10,10 +10,23 @@
     <body>
         <!-- Here goes the visible content of the page -->
         <h1>Welcome to the Warehouse Manager!</h1>
-        
-        <table id="storedItems">
+
+        <h3>Current Order</h3>
+        <table border="1" id="storedItems">
         </table>
-        
+
+        <div >
+            <input id="showFormButton" type="button" name="New Order" value="New Order" onclick="showOrderForm('addEntryForm')">
+        </div>
+        <div id="addEntryForm" style="display: none">
+            <form>
+                <label>Item name:</label>
+                <input type="text" name="itemName"><br>
+                <label>Quantity:</label>
+                <input type="number" name="quantity">
+                <input type="button" name="button" value="Send Order" onClick="">
+            </form>
+        </div>
         <script src="script.js"></script> 
     </body>
 </html>
