@@ -18,13 +18,13 @@
         <div >
             <input id="showFormButton" type="button" name="New Order" value="New Order" onclick="showOrderForm('addEntryForm')">
         </div>
-        <div id="addEntryForm" style="display: none">
-            <form>
+        <div >
+            <form id="addEntryForm" style="display: none">
                 <label>Item name:</label>
-                <input type="text" name="itemName"><br>
+                <input type="text" name="itemName" value=""><br>
                 <label>Quantity:</label>
-                <input type="number" name="quantity">
-                <input type="button" name="button" value="Send Order" onClick="">
+                <input type="number" name="quantity" value="">
+                <input type="button" name="button" name="Send Order" value="Send Order" onClick="insertNewOrder('addEntryForm')">
             </form>
         </div>
         <script src="script.js"></script> 
