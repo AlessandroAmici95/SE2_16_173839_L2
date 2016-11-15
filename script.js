@@ -19,7 +19,7 @@ function WareHouse(){
     this.capacity = 30;
     this.addNewEntry = function(orderEntry){//funzione che permette di aggiungere una entry al currentOrder
         var result = true;
-        if((!isFinite(new Number(orderEntry.quantity))) || (orderEntry.itemName == '')){
+        if((!isFinite(new Number(orderEntry.quantity))) || (orderEntry.itemName == '') || (orderEntry.quantity <= 0)){
             result = false;
         }
         else {
