@@ -60,6 +60,14 @@ function WareHouse(){
         }
         return result;
     }
+
+    this.getOccupiedSpace = function(){
+        var occupiedSpace = 0;
+        for(var i in this.currentOrder){
+            occupiedSpace += this.currentOrder[i].quantity;
+        }
+        return occupiedSpace;
+    }
 };
 
 //view
@@ -117,6 +125,12 @@ var updateCapacityInput = function(warehouse){
     capacityInput.value = warehouse.capacity;
 };
 
+var updateOccupiedSpaceLabel = function(quantity){
+    var occupiedSpaceLabel = document.getElementById('occupiedSpaceLabel');
+    console.log(quantity);
+    occupiedSpaceLabel.innerHTML = quantity.toString();
+}
+
 //Controller
 var warehouse = new WareHouse();
 warehouse.currentOrder.push(new OrderEntry("item1", 4));
@@ -125,6 +139,7 @@ warehouse.currentOrder.push(new OrderEntry("item3", 6));
 
 document.getElementById("storedItems").innerHTML = getHTMLOrderTable(warehouse.currentOrder);
 updateCapacityInput(warehouse);
+updateOccupiedSpaceLabel(warehouse.getOccupiedSpace());
 console.log(getHTMLOrderTable(warehouse.currentOrder));
 
 var insertNewOrder = function(formID){
@@ -133,6 +148,7 @@ var insertNewOrder = function(formID){
     if(warehouse.addNewEntry(newItem)){
         document.getElementById("storedItems").innerHTML = getHTMLOrderTable(warehouse.currentOrder);
         refreshOrderForm(formID);
+        updateOccupiedSpaceLabel(warehouse.getOccupiedSpace());
         if(warehouse.isFull()){
             alert("Il magazzino è pieno!");
         }
