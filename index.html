@@ -16,7 +16,9 @@
         </table>
 
         <div >
-            <input id="showFormButton" type="button" name="New Order" value="New Order" onclick="showOrderForm('addEntryForm')">
+            <label> Warehouse capacity: </label><input type="number" id="capacityInput" name="capacityInput" value=""><br>
+            <input id="showFormButton" type="button" name="New Order" value="New Order" onclick="setViewForNewOrder('addEntryForm')">
+            <input id="updateCapacityButton" type="button"  value="Update capacity" onclick="updateCapacity('capacityInput')">
         </div>
         <div >
             <form id="addEntryForm" style="display: none">

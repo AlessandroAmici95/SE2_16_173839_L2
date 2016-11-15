@@ -16,9 +16,10 @@ function OrderEntry(itemName, quantity){
  */
 function WareHouse(){
     this.currentOrder = [];
-    this.addNewEntry = function(orderEntry){
+    this.capacity = 30;
+    this.addNewEntry = function(orderEntry){//funzione che permette di aggiungere una entry al currentOrder
         var result = true;
-        if(!isFinite(new Number(orderEntry.quantity))){
+        if((!isFinite(new Number(orderEntry.quantity))) || (orderEntry.itemName == '')){
             result = false;
         }
         else {
@@ -37,6 +38,28 @@ function WareHouse(){
         }
         return result;
     };
+
+    this.isFull = function(){//funzione che controlla se la somma delle quantità è superiore alla capacità del magazzino
+        var result = false;
+        sum = 0;
+        for(i in this.currentOrder){
+            sum += this.currentOrder[i].quantity;
+        }
+        if(sum > this.capacity){
+            result = true;
+        }
+        return result;
+    };
+
+    this.updateCapacity = function(newCapacity){
+        var result = false;
+        console.log(newCapacity);
+        if(isFinite(newCapacity) && newCapacity != ''){
+            this.capacity = newCapacity;
+            result = true;
+        }
+        return result;
+    }
 };
 
 //view
@@ -77,15 +100,22 @@ var getHTMLOrderTable = function(order){
  * @param formID
  */
 var showOrderForm = function(formID){
-
     form  = document.getElementById(formID);
     form.style.display = 'block';
 
 }
 
 var refreshOrderForm = function (formID) {
+    var form = document.getElementById(formID);
+    form.itemName.value = "";
+    form.quantity.value = "";
+    form.style.display = 'none';
+};
 
-}
+var updateCapacityInput = function(warehouse){
+    var capacityInput = document.getElementById('capacityInput');
+    capacityInput.value = warehouse.capacity;
+};
 
 //Controller
 var warehouse = new WareHouse();
@@ -94,6 +124,7 @@ warehouse.currentOrder.push(new OrderEntry("item2", 2));
 warehouse.currentOrder.push(new OrderEntry("item3", 6));
 
 document.getElementById("storedItems").innerHTML = getHTMLOrderTable(warehouse.currentOrder);
+updateCapacityInput(warehouse);
 console.log(getHTMLOrderTable(warehouse.currentOrder));
 
 var insertNewOrder = function(formID){
@@ -101,10 +132,33 @@ var insertNewOrder = function(formID){
     newItem = new OrderEntry(form.itemName.value, parseInt(form.quantity.value));
     if(warehouse.addNewEntry(newItem)){
         document.getElementById("storedItems").innerHTML = getHTMLOrderTable(warehouse.currentOrder);
-        refreshOrderForm();
+        refreshOrderForm(formID);
+        if(warehouse.isFull()){
+            alert("Il magazzino è pieno!");
+        }
     }else{
         alert("i dati inseriti sono sbagliati, riprova");
-        refreshOrderForm();
+        refreshOrderForm(formID);
     }
     console.log(newItem);
+};
+
+var updateCapacity = function(capacityInputID){
+    var capacityInput = document.getElementById(capacityInputID);
+    if(warehouse.updateCapacity(capacityInput.value)){
+        if(warehouse.isFull()){
+            alert("Il magazzino è pieno!");
+        }
+    }
+    else{
+        alert("Non sono riuscito ad aggiornare la capacità del magazzino!");
+    }
+
+};
+
+var setViewForNewOrder = function(formID){
+    showOrderForm(formID);
+    if(warehouse.isFull()){
+        alert("Il magazzino è pieno!");
+    }
 }
